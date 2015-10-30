@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My First React Component</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+      // To get started with this tutorial running your own code, simply remove
+      // the script tag loading scripts/example.js and start writing code here.
+      var UsContactForm = React.createClass({
+        render: function() {
+          if (this.props.choice == 'us') {
+            return (
+              <div className="usContactForm">US Contact</div>
+            );
+          }
+          else {
+            return (<div></div>);
+          }
+        }
+      });
+      var UkContactForm = React.createClass({
+        render: function() {
+          if (this.props.choice == 'uk') {
+            return (
+              <div className="ukContactForm">UK Contact</div>
+            );
+          }
+          else {
+            return (<div></div>);
+          }
+        }
+      });
+      var CaContactForm = React.createClass({
+        render: function() {
+          if (this.props.choice == 'ca') {
+            return (
+              <div className="caContactForm">Canada Contact</div>
+            );
+          }
+          else {
+            return (<div></div>);
+          }
+        }
+      });
+      var countries = [
+        {value: 'ca', name: 'Canada'},
+        {value: 'us', name: 'United States'},
+        {value: 'uk', name: 'United Kingdom'}
+      ];
+      var CountrySelection = React.createClass({
+        getInitialState: function() {
+          return {country: this.props.defaultCountry};
+        },
+        update: function(data) {
+          this.setState({country: $('.countryDropdown').val()});
+        },
+        render: function() {
+          var countryOptions = this.props.countries.map(function(country) {
+            return (
+              <option value={country.value}>{country.name}</option>
+            );
+          });
+          return (
+            <div className="countrySelection">
+              <select className="countryDropdown" defaultValue={this.props.defaultCountry} onChange={this.update}>
+                {countryOptions}
+              </select>
+              <CaContactForm choice = {this.state.country} />
+              <UkContactForm choice = {this.state.country} />
+              <UsContactForm choice = {this.state.country} />
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <CountrySelection countries = {countries} defaultCountry = 'ca' />,
+        document.body
+      );
+    </script>
+  </body>
+</html>
